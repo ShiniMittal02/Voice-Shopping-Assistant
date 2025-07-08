@@ -2,23 +2,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Voice Shopping Assistant</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>🛒 Voice Shopping Assistant</h1>
-<select id="languageSelect">
-  <option value="en-IN">English (India)</option>
-  <option value="hi-IN">Hindi</option>
-  <option value="es-ES">Spanish</option>
-  <option value="ta-IN">Tamil</option>
-  <option value="bn-IN">Bengali</option>
-  <option value="gu-IN">Gujarati</option>
-</select>
+  <div class="container">
+    <h1>🛒 Voice Shopping Assistant</h1>
 
-  <button onclick="startListening()">🎤 Speak</button>
+    <!-- Language selection -->
+    <select id="languageSelect">
+      <option value="en-IN">English (India)</option>
+      <option value="hi-IN">Hindi</option>
+      <option value="es-ES">Spanish</option>
+    </select>
 
-  <ul id="shopping-list"></ul>
+    <!-- Voice control -->
+    <button onclick="startListening()" id="mic-button">🎤 Tap to Speak</button>
+
+    <!-- Feedback area -->
+    <div id="feedback" class="feedback">Say something like "Add 2 apples"</div>
+
+    <!-- Shopping list -->
+    <ul id="shopping-list"></ul>
+  </div>
 
   <script src="script.js"></script>
 </body>
