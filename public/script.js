@@ -1,8 +1,10 @@
 let list = [];
 
+
 function startListening() {
+  const lang = document.getElementById("languageSelect").value;
   const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-  recognition.lang = 'en-US';
+  recognition.lang = lang;
   recognition.start();
 
   recognition.onresult = function (event) {
@@ -15,29 +17,26 @@ function startListening() {
   };
 }
 
+
 function processCommand(command) {
-  const addMatch = command.match(/add (.*)/i);
-  const removeMatch = command.match(/remove (.*)/i);
+  const lower = command.toLowerCase();
 
-  if (addMatch) {
-    const item = addMatch[1];
+  if (lower.includes("add") || lower.includes("buy") || lower.includes("get")) {
+    const item = lower.replace(/(i want to buy|add|buy|get)\s+/i, '').trim();
     list.push(item);
-    updateList();
-  } else if (removeMatch) {
-    const item = removeMatch[1];
+    speakBack(`Added ${item} to your list`);
+  } else if (lower.includes("remove") || lower.includes("delete")) {
+    const item = lower.replace(/(remove|delete)\s+/i, '').trim();
     list = list.filter(i => i !== item);
-    updateList();
+    speakBack(`Removed ${item} from your list`);
   } else {
-    alert("❓ Command not recognized. Try 'Add milk' or 'Remove apples'");
+    speakBack("Sorry, I didn't understand. Please say something like 'Add apples' or 'Remove milk'");
   }
-}
 
-function updateList() {
-  const ul = document.getElementById("shopping-list");
-  ul.innerHTML = "";
-  list.forEach(item => {
-    const li = document.createElement("li");
-    li.textContent = item;
-    ul.appendChild(li);
-  });
+  updateList();
+}
+function speakBack(text) {
+  const synth = window.speechSynthesis;
+  const utterance = new SpeechSynthesisUtterance(text);
+  synth.speak(utterance);
 }
